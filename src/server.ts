@@ -105,7 +105,7 @@ async function init() {
 
   state
     .init()
-    .then(connectToDatabase)
+    // .then(connectToDatabase)
     .then(() => {
       app.use(helmet());
       app.use(cors());
