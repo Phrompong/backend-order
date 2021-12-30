@@ -3,7 +3,7 @@ import express from "express";
 var router = express.Router();
 
 const PAGE_ACCESS_TOKEN =
-  "EAAGY2AVZAy2cBAOZCOfiuESDMZAmRdHaAx2TpMH7DVHrmCULhvYkOArzlahVvXo5G7nKczv0ZCcTuBLybkC2mG4AXujkovuENMsBOWKnmku1zNAPjoIokNkZAM7DTTgjvYvnoT231ZAHm59PJZCNdXhXSyr3RA00cZBgBva6ZBFD2NJ45JkW18CvZB";
+  "EAAPqGZBbZBLV8BAFVXzNotDjZC1vr53S8rS86MQaHuWWu6QkuPYZBPGfwagbdCQ5SPk8IiLODwSA5R9TXY0Nk8YTV76pDkIQu6nbpobEZA4n0CPwauGvNqFSHUYTYHAdP8kRHmJLKyZBXxvZCpYzFq5F88yFZBPmAorIZBfsz5N6RkLxEd8dkCZCQZB";
 const VERIFY_TOKEN = "chatv3";
 const { get } = require("lodash");
 const request = require("request");
