@@ -13,6 +13,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const state = container.get<IState>(TYPES.State);
 const app = express();
+const fs = require("fs");
 
 async function connectToDatabase(): Promise<void> {
   try {
@@ -65,11 +66,11 @@ async function init() {
 
   const port = process.env.PORT || 443;
   const server = https.createServer(
-    // {
-    //   cert: fs.readFileSync("../../../etc/httpd/ssl/134_209_108_248.crt"),
-    //   key: fs.readFileSync("../../../etc/httpd/ssl/private.key"),
-    //   ca: fs.readFileSync("../../../etc/httpd/ssl/CARootCertificate-ca.crt"),
-    // },
+    {
+      cert: fs.readFileSync("../../../etc/httpd/ssl/134_209_108_248.crt"),
+      key: fs.readFileSync("../../../etc/httpd/ssl/private.key"),
+      ca: fs.readFileSync("../../../etc/httpd/ssl/CARootCertificate-ca.crt"),
+    },
     app
   );
 
