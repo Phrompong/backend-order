@@ -2,7 +2,7 @@ const { get } = require("lodash");
 const request = require("request");
 
 const data =
-  "สรุปรายการสั่งซื้อ" +
+  "สรุปรายการสั่งซื้อ \r" +
   "ชื่อรุ่น ไฟแชีคกระสุน" +
   "คุณสมบัติ จุดไฟ" +
   "สี ทอง" +
