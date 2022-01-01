@@ -17,7 +17,7 @@ let state: IState;
 //   "เบอร์:  \r " +
 //   "แอดมิน:  \r";
 
-async function convertMessage(data: string): Promise<transaction> {
+async function convertMessage(data: any): Promise<transaction> {
   state = container.get<IState>(TYPES.State);
   try {
     const model = data
