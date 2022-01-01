@@ -5,20 +5,7 @@ import { TYPES } from "../types";
 
 let state: IState;
 
-const data =
-  "สรุปรายการสั่งซื้อ" +
-  "ชื่อรุ่น ไฟแชีคกระสุน" +
-  "คุณสมบัติ จุดไฟ" +
-  "สี ทอง" +
-  "จำนวน 1" +
-  "(โอน.COD) COD" +
-  "จำนวนเงิน 209" +
-  "ชื่อผู้สั่ง นายพร้อมพงศ์ แขกเทศ" +
-  "ที่อยู่ Britania lumluka" +
-  "เบอร์ 9999999" +
-  "แอดมิน ชอป";
-
-async function convertMessage(message: string): Promise<transaction> {
+async function convertMessage(data: string): Promise<transaction> {
   state = container.get<IState>(TYPES.State);
   try {
     const model = data
