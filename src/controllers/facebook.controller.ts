@@ -1,4 +1,4 @@
-import { transactionModel } from "../../models/trasaction.model";
+import { transactionModel } from "../models/trasaction.model";
 import commonController from "./common.controller";
 
 const { get } = require("lodash");
