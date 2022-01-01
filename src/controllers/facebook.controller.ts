@@ -36,17 +36,17 @@ export async function sendMessage(events: any) {
 
     const bodyText = requestBody.message.text;
 
-    const check = bodyText.search("กรุณากรอกข้อมูลต่อไปนี้เพื่อสั่งซื้อสินค้า");
+    const check = bodyText.search("สรุปรายการสั่งซื้อ");
 
-    if (check === -1) {
-      requestBody.message.text = data;
-    } else {
-      requestBody.message.text = "Thank you for order";
-      const data = await commonController.convertMessage(bodyText);
-      console.log(JSON.stringify(data));
+    // if (check === -1) {
+    //   requestBody.message.text = data;
+    // } else {
+    //   requestBody.message.text = "Thank you for order";
+    //   const data = await commonController.convertMessage(bodyText);
+    //   console.log(JSON.stringify(data));
 
-      await transactionModel.create(data);
-    }
+    //   await transactionModel.create(data);
+    // }
 
     const config = {
       method: "post",
