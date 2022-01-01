@@ -9,7 +9,10 @@ const state = container.get<IState>(TYPES.State);
 
 router.get("/", async (req, res) => {
   try {
-    const { startDate, endDate } = req.query;
+    let { startDate, endDate } = req.query;
+
+    const page = req.query.page?.toString() || 1;
+    const limit = req.query.limit?.toString() || 10;
 
     let obj: any = {};
     if (startDate && endDate) {
@@ -21,9 +24,15 @@ router.get("/", async (req, res) => {
       };
     }
 
-    res
-      .status(200)
-      .respond(0, "success", await transactionModel.find(obj).lean());
+    res.status(200).respond(
+      0,
+      "success",
+      await transactionModel
+        .find(obj)
+        .sort({ createdDate: -1 })
+        .skip((+page - 1) * +limit)
+        .limit(+limit)
+    );
 
     return;
   } catch (error) {
