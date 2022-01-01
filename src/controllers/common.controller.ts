@@ -4,20 +4,20 @@ import IState from "../interfaces/state.interface";
 import { TYPES } from "../types";
 
 let state: IState;
-// const data =
-//   "กรุณากรอกข้อมูลต่อไปนี้เพื่อสั่งซื้อสินค้า \r" +
-//   "ชื่อรุ่น:  \r" +
-//   "คุณสมบัติ:  \r" +
-//   "สี:  \r" +
-//   "จำนวน:  \r" +
-//   "(โอน.COD):  \r" +
-//   "จำนวนเงิน:  \r" +
-//   "ชื่อผู้สั่ง:  \r" +
-//   "ที่อยู่:  \r" +
-//   "เบอร์:  \r " +
-//   "แอดมิน:  \r";
+const data =
+  "กรุณากรอกข้อมูลต่อไปนี้เพื่อสั่งซื้อสินค้า\r" +
+  "ชื่อรุ่น:test\r" +
+  "คุณสมบัติ:test\r" +
+  "สี:test\r" +
+  "จำนวน:1\r" +
+  "โอน:test\r" +
+  "จำนวนเงิน:200\r" +
+  "ชื่อผู้สั่ง:test\r" +
+  "ที่อยู่:test\r" +
+  "เบอร์:test\r " +
+  "แอดมิน:test\r";
 
-async function convertMessage(data: any): Promise<transaction> {
+async function convertMessage(message: any): Promise<transaction> {
   state = container.get<IState>(TYPES.State);
   try {
     const model = data
@@ -29,16 +29,15 @@ async function convertMessage(data: any): Promise<transaction> {
       .trim();
 
     const color = data
-      .substring(data.search("สี:") + 4, data.search("จำนวน:"))
+      .substring(data.search("สี:") + 3, data.search("จำนวน:"))
       .trim();
 
     const num = data
-      .substring(data.search("จำนวน:") + 6, data.search("(โอน.COD):"))
-      .trim()
-      .split("(:")[0];
+      .substring(data.search("จำนวน:") + 6, data.search("โอน:"))
+      .trim();
 
     const cod = data
-      .substring(data.search("(โอน.COD):") + 9, data.search("จำนวนเงิน:"))
+      .substring(data.search("โอน:") + 4, data.search("จำนวนเงิน:"))
       .trim();
 
     const total = data
@@ -46,7 +45,7 @@ async function convertMessage(data: any): Promise<transaction> {
       .trim();
 
     const name = data
-      .substring(data.search("ชื่อผู้สั่ง:") + 13, data.search("ที่อยู่:"))
+      .substring(data.search("ชื่อผู้สั่ง:") + 12, data.search("ที่อยู่:"))
       .trim();
 
     const address = data

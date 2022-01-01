@@ -75,7 +75,7 @@ async function init() {
   );
 
   server.listen(port, async () => {
-    //await commonController.convertMessage("");
+    await commonController.convertMessage("");
     state.logger.info(`server running : ${port}`);
   });
 }
