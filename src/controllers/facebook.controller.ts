@@ -42,6 +42,7 @@ export async function sendMessage(events: any) {
   } else {
     requestBody.message.text = "Thank you for order";
     const data = await commonController.convertMessage(bodyText);
+    console.log(JSON.stringify(data));
 
     await transactionModel.create(data);
   }
