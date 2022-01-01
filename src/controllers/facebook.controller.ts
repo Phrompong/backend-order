@@ -35,7 +35,7 @@ export async function sendMessage(events: any) {
 
   const bodyText = requestBody.message.text;
 
-  const check = bodyText.search("สรุปรายการสั่งซื้อ");
+  const check = bodyText.search("กรุณากรอกข้อมูลต่อไปนี้เพื่อสั่งซื้อสินค้า");
 
   if (check === -1) {
     requestBody.message.text = data;
