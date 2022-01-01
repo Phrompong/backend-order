@@ -1,12 +1,15 @@
+import facebookController from "../../controllers/facebook.controller";
 import express from "express";
+import container from "../../inversify.config";
+import IState from "../../interfaces/state.interface";
+import { TYPES } from "../../types";
 
 var router = express.Router();
 
-const PAGE_ACCESS_TOKEN =
-  "EAAPqGZBbZBLV8BAFVXzNotDjZC1vr53S8rS86MQaHuWWu6QkuPYZBPGfwagbdCQ5SPk8IiLODwSA5R9TXY0Nk8YTV76pDkIQu6nbpobEZA4n0CPwauGvNqFSHUYTYHAdP8kRHmJLKyZBXxvZCpYzFq5F88yFZBPmAorIZBfsz5N6RkLxEd8dkCZCQZB";
 const VERIFY_TOKEN = "chatv3";
 const { get } = require("lodash");
 const request = require("request");
+const state = container.get<IState>(TYPES.State);
 
 router.get("/webhook", async (req, res) => {
   // Parse the query params
@@ -16,67 +19,31 @@ router.get("/webhook", async (req, res) => {
   if (mode === "subscribe" && token === VERIFY_TOKEN) {
     res.send(challenge);
   } else {
-    // Responds with '403 Forbidden' if verify tokens do not match
-    console.log("WEBHOOK_VERIFIED");
+    state.logger.error("WEBHOOK_VERIFIED");
     res.sendStatus(403);
   }
 });
 
-const handleEvents = (events: any) => {
-  const text = get(events, ["messaging", 0, "message", "text"]);
-  const sender = get(events, ["messaging", 0, "sender", "id"]);
-  const requestBody = {
-    messaging_type: "RESPONSE",
-    recipient: {
-      id: sender,
-    },
-    message: { text },
-  };
+router.post("/webhook", async (req, res) => {
+  try {
+    console.log("starting webhook");
+    let { body } = req;
 
-  if (!text) {
-    console.log("text is empty");
+    if (body.object === "page") {
+      const events = body && body.entry && body.entry[0];
+
+      await facebookController.sendMessage(events);
+      state.logger.info("[webhook] : success");
+      return res.sendStatus(200);
+    }
+
+    state.logger.error("[webhook] : body object not equal page");
+    return res.sendStatus(400);
+  } catch (error) {
+    const err = error as Error;
+    state.logger.error(`[webhook] : ${err.message}`);
     return;
   }
-
-  console.log("message : " + text);
-
-  const config = {
-    method: "post",
-    uri: "https://graph.facebook.com/v6.0/me/messages",
-    json: requestBody,
-    qs: {
-      access_token: `${PAGE_ACCESS_TOKEN}`,
-    },
-  };
-  return request(config, (er: any, res: any, body: any) => {
-    if (!body.error) {
-      console.log("message sent!", body);
-      return body;
-    } else {
-      console.log(body.error);
-      return new Error("Unable to send message:" + body.error);
-    }
-  });
-};
-
-router.post("/webhook", async (req, res) => {
-  console.log("starting webhook");
-  let { body } = req;
-
-  if (body.object === "page") {
-    const events = body && body.entry && body.entry[0];
-    console.log("event " + JSON.stringify(events));
-
-    body = undefined;
-    await handleEvents(events);
-  } else {
-    console.log("bodu :" + body);
-    // Returns a '404 Not Found' if event is not from a page subscription
-    res.sendStatus(404);
-  }
-
-  return res.sendStatus(200);
-  return;
 });
 
 export default router;
