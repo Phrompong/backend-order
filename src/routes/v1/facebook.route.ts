@@ -31,10 +31,13 @@ router.post("/webhook", async (req, res) => {
 
     console.log(body.entry[0].messaging[0].message.text);
 
+    const message = body.entry[0].messaging[0].message.text;
+    const sender = body.entry[0].messaging[0].sender.id;
+
     if (body.object === "page") {
       const events = body && body.entry && body.entry[0];
 
-      await facebookController.sendMessage(events);
+      await facebookController.sendMessage(sender, message);
       state.logger.info("[webhook] : success");
       return res.sendStatus(200);
     }

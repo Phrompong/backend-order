@@ -17,10 +17,8 @@ const data =
   "เบอร์:\r " +
   "แอดมิน:\r";
 
-export async function sendMessage(events: any) {
+export async function sendMessage(sender: string, text: string) {
   try {
-    const text = get(events, ["messaging", 0, "message", "text"]);
-    const sender = get(events, ["messaging", 0, "sender", "id"]);
     const requestBody = {
       messaging_type: "RESPONSE",
       recipient: {
@@ -34,38 +32,35 @@ export async function sendMessage(events: any) {
       return;
     }
 
-    const bodyText = requestBody.message.text;
+    const check = text.search("สรุปรายการสั่งซื้อ");
 
-    const check = bodyText.search("สรุปรายการสั่งซื้อ");
+    if (check !== -1) {
+      const data = await commonController.convertMessage(text);
+      await transactionModel.create(data);
 
-    // if (check === -1) {
-    //   requestBody.message.text = data;
-    // } else {
-    //   requestBody.message.text = "Thank you for order";
-    //   const data = await commonController.convertMessage(bodyText);
-    //   console.log(JSON.stringify(data));
+      requestBody.message.text = "Save success";
 
-    //   await transactionModel.create(data);
-    // }
+      const config = {
+        method: "post",
+        uri: "https://graph.facebook.com/v6.0/me/messages",
+        json: requestBody,
+        qs: {
+          access_token: `${process.env.PAGE_ACCESS_TOKEN}`,
+        },
+      };
 
-    const config = {
-      method: "post",
-      uri: "https://graph.facebook.com/v6.0/me/messages",
-      json: requestBody,
-      qs: {
-        access_token: `${process.env.PAGE_ACCESS_TOKEN}`,
-      },
-    };
+      return request(config, (er: any, res: any, body: any) => {
+        if (!body.error) {
+          console.log("message sent!", body);
+          return body;
+        } else {
+          console.log(body.error);
+          return new Error("Unable to send message:" + body.error);
+        }
+      });
+    }
 
-    return request(config, (er: any, res: any, body: any) => {
-      if (!body.error) {
-        console.log("message sent!", body);
-        return body;
-      } else {
-        console.log(body.error);
-        return new Error("Unable to send message:" + body.error);
-      }
-    });
+    return;
   } catch (error) {
     const err = error as Error;
     console.log(err.message);
