@@ -30,6 +30,12 @@ export class transaction {
 
   @prop()
   public admin!: string;
+
+  @prop()
+  public createdDate!: Date;
+
+  @prop()
+  public updatedDate?: Date;
 }
 
 export const transactionModel = getModelForClass(transaction, {
