@@ -4,7 +4,7 @@ import IState from "../interfaces/state.interface";
 import { TYPES } from "../types";
 
 let state: IState;
-const data =
+const test =
   "กรุณากรอกข้อมูลต่อไปนี้เพื่อสั่งซื้อสินค้า\r" +
   "ชื่อรุ่น:test\r" +
   "คุณสมบัติ:test\r" +
