@@ -28,8 +28,8 @@ router.post("/webhook", async (req, res) => {
   try {
     console.log("starting webhook");
     let { body } = req;
-    console.log(JSON.stringify(body));
-    console.log(body.entry[0].message);
+
+    console.log(body.entry[0].messaging[0].message.text);
 
     if (body.object === "page") {
       const events = body && body.entry && body.entry[0];
