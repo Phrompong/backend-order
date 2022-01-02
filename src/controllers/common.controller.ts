@@ -5,7 +5,8 @@ import { TYPES } from "../types";
 
 let state: IState;
 const test =
-  "กรุณากรอกข้อมูลต่อไปนี้เพื่อสั่งซื้อสินค้า\r" +
+  "สรุปรายการสั่งซื้อ\r" +
+  "ชื่อเพจ:test\r" +
   "ชื่อรุ่น:test\r" +
   "คุณสมบัติ:test\r" +
   "สี:test\r" +
@@ -20,6 +21,10 @@ const test =
 async function convertMessage(data: any): Promise<transaction> {
   state = container.get<IState>(TYPES.State);
   try {
+    const page = data
+      .substring(data.search("ชื่อเพจ:") + 9, data.search("ชื่อรุ่น:"))
+      .trim();
+
     const model = data
       .substring(data.search("ชื่อรุ่น:") + 9, data.search("คุณสมบัติ:"))
       .trim();
@@ -59,6 +64,7 @@ async function convertMessage(data: any): Promise<transaction> {
     const admin = data.substring(data.search("แอดมิน:") + 7);
 
     const response: transaction = {
+      page,
       model,
       property,
       color,

@@ -2,6 +2,9 @@ import { getModelForClass, prop } from "@typegoose/typegoose";
 
 export class transaction {
   @prop()
+  public page!: string;
+
+  @prop()
   public name!: string;
 
   @prop()
