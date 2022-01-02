@@ -54,6 +54,8 @@ async function forVerify(events: any) {
       },
     };
 
+    console.log(JSON.stringify(config));
+
     return request(config, (err: any, res: any, body: any) => {
       if (!body.error) {
         console.log("message sent!", body);
