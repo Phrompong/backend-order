@@ -20,8 +20,6 @@ const data =
   "ที่อยู่:\r" +
   "เบอร์:\r " +
   "แอดมิน:\r";
-const PAGE_ACCESS_TOKEN =
-  "EAAEhLR6SuJEBAKdisDxrNPSu4UHfQBDAMMx7is0ZCcqirJl9PazIN4xrbq15t53jUt6DZA1tNZBpUIj5sRlP3ZCdQCYYRxQ6sMQatYh2qREeWRiBoWGoxUDq97eVgoYZBXIkpbxN8tpHsZCftb0DGMTc2TIpJHZAskrSEziOggdM8WZCjT1yafLcSUPxeSYCDnwZD";
 
 async function forVerify(events: any) {
   try {
@@ -50,7 +48,7 @@ async function forVerify(events: any) {
       uri: "https://graph.facebook.com/v6.0/me/messages",
       json: requestBody,
       qs: {
-        access_token: `${PAGE_ACCESS_TOKEN}`,
+        access_token: `${process.env.PAGE_ACCESS_TOKEN}`,
       },
     };
 
