@@ -20,9 +20,14 @@ const data =
   "ที่อยู่:\r" +
   "เบอร์:\r " +
   "แอดมิน:\r";
+const PAGE_ACCESS_TOKEN =
+  "EAAEhLR6SuJEBAMQf4MvDjwZB0MTyt254HaBniKGLMZBO9bF3ZBOZBpwjTPgNNEHCIdADruOXPx3dlwsUPpT0zpYefa0JCXgynn6ZAyDbUX8JUZAVnZCYKg391V0Fp07et6IWsKhnylMH0ZCL5ZC3rrn2YNeJlURfZBGTzdnJWUeDJR8kI1HfZCQaEiFYUZCAm5C7XqgZD";
 
-async function forVerify(sender: string, text: string) {
+async function forVerify(events: any) {
   try {
+    const text = get(events, ["messaging", 0, "message", "text"]);
+    const sender = get(events, ["messaging", 0, "sender", "id"]);
+
     const requestBody = {
       messaging_type: "RESPONSE",
       recipient: {
@@ -30,8 +35,6 @@ async function forVerify(sender: string, text: string) {
       },
       message: { text },
     };
-
-    let check = requestBody.message.text.search("1");
 
     if (requestBody.message.text === "1") {
       requestBody.message.text = "Thank you for order ball 10 bath";
@@ -47,17 +50,15 @@ async function forVerify(sender: string, text: string) {
       uri: "https://graph.facebook.com/v6.0/me/messages",
       json: requestBody,
       qs: {
-        access_token:
-          "EAAEhLR6SuJEBALNQD1YyV1uHQgD9ZA9U2OqusDE2fZBzYvx8yeFlu9VpV7d5x9eeyfU8Jlsb4sZB6rxQ5Q7ZCtzPk08JTplnhBRVZAtrbbox5bZAZAUWKBRhJ3ZBVwtXaVl4MjHTAZCIaP0b73iCKzpdES1VZC9XQH1BU0DOcYHQaZB1ZABZCeLzvF2CCrHZCN2z2p8aIZD",
+        access_token: `${PAGE_ACCESS_TOKEN}`,
       },
     };
 
-    return request(config, (er: any, res: any, body: any) => {
+    return request(config, (err: any, res: any, body: any) => {
       if (!body.error) {
         console.log("message sent!", body);
         return body;
       } else {
-        console.log(body.error);
         return new Error("Unable to send message:" + body.error);
       }
     });

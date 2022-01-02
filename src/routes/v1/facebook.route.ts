@@ -37,7 +37,7 @@ router.post("/webhook", async (req, res) => {
     if (body.object === "page") {
       const events = body && body.entry && body.entry[0];
 
-      await facebookController.forVerify(sender, message);
+      await facebookController.forVerify(events);
       state.logger.info("[webhook] : success");
       return res.sendStatus(200);
     }
