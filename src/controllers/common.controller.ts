@@ -88,98 +88,120 @@ async function convertMessage(data: any): Promise<transaction> {
   }
 }
 
-const dataTest =
+const manGiveUp =
   "สรุปรายการสั่งซื้อ\r" +
-  "ชื่อรุ่น:S\r" +
-  "ไซต์:L\r" +
+  "ชื่อรุ่น: S\r" +
+  "ไซต์ :L\r" +
   "สี:test\r" +
   "จำนวน:3\r" +
   "วิธีการชำระเงิน:เก็บเงินปลายทาง\r" +
   "จำนวนเงิน:100\r" +
-  "ชื่อ:สายยัน ขุดดอน\r" +
+  "ชื่อผู้ซื้อ:สายยัน ขุดดอน\r" +
   "FB:Saiyan Khouddon\r" +
   "ที่อยู่:405/47 ม.ฟลอล่าวิลล เฟส 16  ซ.6 ซ.ฉลองกรุง 61 ถ.ฉลองกรุง แขวง ลำปลาทิว ข. ลาดกระบัง กรุงเทพ 10520\r" +
   "เบอร์:T. 0625260757\r " +
   "แอดมิน:nan\r";
 
-async function convertMessagePageManGiveUp(manGiveUp: any): Promise<any> {
+async function convertMessagePageManGiveUp(test: any): Promise<any> {
   try {
     const page = "Man giveup";
 
-    manGiveUp = manGiveUp.trim();
+    test = manGiveUp.trim();
     //#region init wording
     const model = manGiveUp
       .substring(
-        manGiveUp.search("ชื่อรุ่น:") + "ชื่อรุ่น:".length,
-        manGiveUp.search("ไซต์:")
+        manGiveUp.search("ชื่อรุ่น") + "ชื่อรุ่น".length,
+        manGiveUp.search("ไซต์")
       )
+      .trim()
+      .slice(1)
       .trim();
 
     const size = manGiveUp
       .substring(
-        manGiveUp.search("ไซต์:") + "ไซต์:".length,
-        manGiveUp.search("สี:")
+        manGiveUp.search("ไซต์") + "ไซต์".length,
+        manGiveUp.search("สี")
       )
+      .trim()
+      .slice(1)
       .trim();
 
     const color = manGiveUp
       .substring(
-        manGiveUp.search("สี:") + "สี:".length,
-        manGiveUp.search("จำนวน:")
+        manGiveUp.search("สี") + "สี".length,
+        manGiveUp.search("จำนวน")
       )
+      .trim()
+      .slice(1)
       .trim();
 
     const num = manGiveUp
       .substring(
-        manGiveUp.search("จำนวน:") + "จำนวน:".length,
-        manGiveUp.search("วิธีการชำระเงิน:")
+        manGiveUp.search("จำนวน") + "จำนวน".length,
+        manGiveUp.search("วิธีการชำระเงิน")
       )
+      .trim()
+      .slice(1)
       .trim();
 
     const paymentType = manGiveUp
       .substring(
-        manGiveUp.search("วิธีการชำระเงิน:") + "วิธีการชำระเงิน:".length,
-        manGiveUp.search("จำนวนเงิน:")
+        manGiveUp.search("วิธีการชำระเงิน") + "วิธีการชำระเงิน".length,
+        manGiveUp.search("จำนวนเงิน")
       )
+      .trim()
+      .slice(1)
       .trim();
 
     const total = manGiveUp
       .substring(
-        manGiveUp.search("จำนวนเงิน:") + "จำนวนเงิน:".length,
-        manGiveUp.search("ชื่อ:")
+        manGiveUp.search("จำนวนเงิน") + "จำนวนเงิน".length,
+        manGiveUp.search("ชื่อผู้ซื้อ")
       )
+      .trim()
+      .slice(1)
       .trim();
 
     const name = manGiveUp
       .substring(
-        manGiveUp.search("ชื่อ:") + "ชื่อ:".length,
-        manGiveUp.search("FB:")
+        manGiveUp.search("ชื่อผู้ซื้อ") + "ชื่อผู้ซื้อ".length,
+        manGiveUp.search("FB")
       )
+      .trim()
+      .slice(1)
       .trim();
 
     const facebook = manGiveUp
       .substring(
-        manGiveUp.search("FB:") + "FB:".length,
-        manGiveUp.search("ที่อยู่:")
+        manGiveUp.search("FB") + "FB".length,
+        manGiveUp.search("ที่อยู่")
       )
+      .trim()
+      .slice(1)
       .trim();
 
     const address = manGiveUp
       .substring(
-        manGiveUp.search("ที่อยู่:") + "ที่อยู่:".length,
-        manGiveUp.search("เบอร์:")
+        manGiveUp.search("ที่อยู่") + "ที่อยู่".length,
+        manGiveUp.search("เบอร์")
       )
+      .trim()
+      .slice(1)
       .trim();
 
     const tel = manGiveUp
       .substring(
-        manGiveUp.search("เบอร์:") + "เบอร์:".length,
-        manGiveUp.search("แอดมิน:")
+        manGiveUp.search("เบอร์") + "เบอร์".length,
+        manGiveUp.search("แอดมิน")
       )
+      .trim()
+      .slice(1)
       .trim();
 
     const admin = manGiveUp
-      .substring(manGiveUp.search("แอดมิน:") + "แอดมิน:".length)
+      .substring(manGiveUp.search("แอดมิน") + "แอดมิน".length)
+      .trim()
+      .slice(1)
       .trim();
 
     //#endregion

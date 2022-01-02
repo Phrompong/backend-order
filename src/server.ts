@@ -75,7 +75,7 @@ async function init() {
   );
 
   server.listen(port, async () => {
-    await commonController.convertMessagePageManGiveUp("");
+    // await commonController.convertMessagePageManGiveUp("");
     state.logger.info(`server running : ${port}`);
   });
 }
