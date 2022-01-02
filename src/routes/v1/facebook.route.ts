@@ -30,6 +30,7 @@ router.post("/manGiveup/webhook", async (req, res) => {
   const page = "page";
   try {
     let { body } = req;
+    console.log(`headers : ${req}`);
     console.log(`++++++++++ ${page} ++++++++++`);
     console.log(`Body request : ${JSON.stringify(body)}`);
     console.log(`[${page}] : ${body.entry[0].messaging[0].message.text}`);
