@@ -6,12 +6,12 @@ import { TYPES } from "../../types";
 
 var router = express.Router();
 
-const VERIFY_TOKEN = "chatv3";
+const VERIFY_TOKEN = "manGriveUpToken";
 const { get } = require("lodash");
 const request = require("request");
 const state = container.get<IState>(TYPES.State);
 
-router.get("/webhook", async (req, res) => {
+router.get("/manGiveup/webhook", async (req, res) => {
   // Parse the query params
   const mode = req.query["hub.mode"];
   const token = req.query["hub.verify_token"];
