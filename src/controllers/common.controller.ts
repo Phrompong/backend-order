@@ -88,7 +88,7 @@ async function convertMessage(data: any): Promise<transaction> {
   }
 }
 
-const dataTest =
+const manGiveUp =
   "สรุปรายการสั่งซื้อ\r" +
   "ชื่อรุ่น: S\r" +
   "ไซต์ :L\r" +
@@ -102,113 +102,41 @@ const dataTest =
   "เบอร์:T. 0625260757\r " +
   "แอดมิน:nan\r";
 
-async function convertMessagePageManGiveUp(manGiveUp: any): Promise<any> {
+async function convertMessagePageManGiveUp(test: any): Promise<any> {
   try {
     const page = "Man giveup";
 
     //#region init wording
-    const model = manGiveUp
-      .substring(
-        manGiveUp.search("ชื่อรุ่น") + "ชื่อรุ่น".length,
-        manGiveUp.search("ไซต์")
-      )
-      .trim()
-      .slice(1)
-      .trim();
+    const model = await initWording(manGiveUp, "ชื่อรุ่น", "ไซต์");
 
-    const size = manGiveUp
-      .substring(
-        manGiveUp.search("ไซต์") + "ไซต์".length,
-        manGiveUp.search("สี")
-      )
-      .trim()
-      .slice(1)
-      .trim();
+    const size = await initWording(manGiveUp, "ไซต์", "สี");
 
-    const color = manGiveUp
-      .substring(
-        manGiveUp.search("สี") + "สี".length,
-        manGiveUp.search("จำนวน")
-      )
-      .trim()
-      .slice(1)
-      .trim();
+    const color = await initWording(manGiveUp, "สี", "จำนวน");
 
-    const num = manGiveUp
-      .substring(
-        manGiveUp.search("จำนวน") + "จำนวน".length,
-        manGiveUp.search("วิธีการชำระเงิน")
-      )
-      .trim()
-      .slice(1)
-      .trim();
+    const num = await initWording(manGiveUp, "จำนวน", "วิธีการชำระเงิน");
 
-    const paymentType = manGiveUp
-      .substring(
-        manGiveUp.search("วิธีการชำระเงิน") + "วิธีการชำระเงิน".length,
-        manGiveUp.search("จำนวนเงิน")
-      )
-      .trim()
-      .slice(1)
-      .trim();
+    const paymentType = await initWording(
+      manGiveUp,
+      "วิธีการชำระเงิน",
+      "จำนวนเงิน"
+    );
 
-    const total = manGiveUp
-      .substring(
-        manGiveUp.search("จำนวนเงิน") + "จำนวนเงิน".length,
-        manGiveUp.search("ชื่อผู้ซื้อ")
-      )
-      .trim()
-      .slice(1)
-      .trim();
+    const total = await initWording(manGiveUp, "จำนวนเงิน", "ชื่อผู้ซื้อ");
 
-    const name = manGiveUp
-      .substring(
-        manGiveUp.search("ชื่อผู้ซื้อ") + "ชื่อผู้ซื้อ".length,
-        manGiveUp.search("FB")
-      )
-      .trim()
-      .slice(1)
-      .trim();
+    const name = await initWording(manGiveUp, "ชื่อผู้ซื้อ", "FB");
 
-    const facebook = manGiveUp
-      .substring(
-        manGiveUp.search("FB") + "FB".length,
-        manGiveUp.search("ที่อยู่")
-      )
-      .trim()
-      .slice(1)
-      .trim();
+    const facebook = await initWording(manGiveUp, "FB", "ที่อยู่");
 
-    const address = manGiveUp
-      .substring(
-        manGiveUp.search("ที่อยู่") + "ที่อยู่".length,
-        manGiveUp.search("เบอร์")
-      )
-      .trim()
-      .slice(1)
-      .trim();
+    const address = await initWording(manGiveUp, "ที่อยู่", "เบอร์");
 
-    const tel = manGiveUp
-      .substring(
-        manGiveUp.search("เบอร์") + "เบอร์".length,
-        manGiveUp.search("แอดมิน")
-      )
-      .trim()
-      .slice(1)
-      .trim();
+    const tel = await initWording(manGiveUp, "เบอร์", "แอดมิน");
 
-    const admin = manGiveUp
-      .substring(manGiveUp.search("แอดมิน") + "แอดมิน".length)
-      .trim()
-      .slice(1)
-      .trim();
+    const admin = await initWording(manGiveUp, "แอดมิน", "");
 
     //#endregion
 
-    console.log(`number : ${num}`);
-    console.log(`total : ${total}`);
-
     const response: transaction = {
+      model,
       page,
       size,
       color,
@@ -227,6 +155,31 @@ async function convertMessagePageManGiveUp(manGiveUp: any): Promise<any> {
     const err = error as Error;
     console.log(err.message);
     throw error;
+  }
+}
+
+async function initWording(data: any, fromWord: string, toWord: string) {
+  try {
+    let response;
+    if (fromWord === "แอดมิน") {
+      response = data
+        .substring(data.search(fromWord) + fromWord.length)
+        .trim()
+        .slice(1)
+        .trim();
+    } else {
+      response = data
+        .substring(data.search(fromWord) + fromWord.length, data.search(toWord))
+        .trim()
+        .slice(1)
+        .trim();
+    }
+
+    return response;
+  } catch (error) {
+    const err = error as Error;
+    console.log(`[initWording] : ${err.message}`);
+    throw err;
   }
 }
 

@@ -54,6 +54,7 @@ router.post("/manGiveup/webhook", async (req, res) => {
 });
 //#endregion
 
+//#region In home
 const verifyTokenInHome = "inHomeToken";
 router.get("/inHome/webhook", async (req, res) => {
   // Parse the query params
@@ -95,5 +96,6 @@ router.post("/inHome/webhook", async (req, res) => {
     return;
   }
 });
+//#endregion
 
 export default router;
