@@ -29,7 +29,7 @@ router.post("/manGiveup/webhook", async (req, res) => {
   try {
     const page = "manGiveup";
     let { body } = req;
-
+    console.log(`+++++ ${page} +++++`);
     console.log(`[Man giveup] : ${body.entry[0].messaging[0].message.text}`);
 
     const message = body.entry[0].messaging[0].message.text;
@@ -39,11 +39,11 @@ router.post("/manGiveup/webhook", async (req, res) => {
       const events = body && body.entry && body.entry[0];
 
       await facebookController.sendMessage(sender, message, page);
-      console.log("[Man giveup] : success");
+      console.log(`+++++ end +++++`);
       return res.sendStatus(200);
     }
 
-    console.log(`[request for Man giveup] : body object not equal page`);
+    console.log(`+++++ end (err) +++++`);
     return res.sendStatus(400);
   } catch (error) {
     const err = error as Error;
