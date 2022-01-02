@@ -88,7 +88,7 @@ async function convertMessage(data: any): Promise<transaction> {
   }
 }
 
-const manGiveUp =
+const dataTest =
   "สรุปรายการสั่งซื้อ\r" +
   "ชื่อรุ่น: S\r" +
   "ไซต์ :L\r" +
@@ -102,11 +102,10 @@ const manGiveUp =
   "เบอร์:T. 0625260757\r " +
   "แอดมิน:nan\r";
 
-async function convertMessagePageManGiveUp(test: any): Promise<any> {
+async function convertMessagePageManGiveUp(manGiveUp: any): Promise<any> {
   try {
     const page = "Man giveup";
 
-    test = manGiveUp.trim();
     //#region init wording
     const model = manGiveUp
       .substring(
