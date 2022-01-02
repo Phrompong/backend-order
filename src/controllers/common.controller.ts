@@ -94,7 +94,7 @@ const manGiveUp =
   "ไซต์:L\r" +
   "สี:test\r" +
   "จำนวน:3\r" +
-  "โอน:เก็บเงินปลายทาง\r" +
+  "วิธีการชำระเงิน:เก็บเงินปลายทาง\r" +
   "จำนวนเงิน:100\r" +
   "ชื่อ:สายยัน ขุดดอน\r" +
   "FB:Saiyan Khouddon\r" +
@@ -130,13 +130,13 @@ async function convertMessagePageManGiveUp(data: any): Promise<any> {
     const num = manGiveUp
       .substring(
         manGiveUp.search("จำนวน:") + "จำนวน:".length,
-        manGiveUp.search("โอน:")
+        manGiveUp.search("วิธีการชำระเงิน:")
       )
       .trim();
 
     const paymentType = manGiveUp
       .substring(
-        manGiveUp.search("โอน:") + "โอน:".length,
+        manGiveUp.search("วิธีการชำระเงิน:") + "วิธีการชำระเงิน:".length,
         manGiveUp.search("จำนวนเงิน:")
       )
       .trim();
