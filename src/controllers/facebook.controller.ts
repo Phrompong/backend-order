@@ -87,6 +87,7 @@ async function sendMessage(sender: string, text: string, page: string) {
           break;
       }
 
+      data.createdDate = new Date();
       await transactionModel.create(data);
 
       console.log(`[sendMessage] : save success : ${JSON.stringify(data)}`);
