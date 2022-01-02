@@ -73,11 +73,11 @@ router.post("/inHome/webhook", async (req, res) => {
   try {
     const page = "inHome";
     let { body } = req;
-    console.log(`+++++ ${page} +++++`);
-    console.log(`[Man giveup] : ${body.entry[0].messaging[0].message.text}`);
+    // console.log(`+++++ ${page} +++++`);
+    // console.log(`[Man giveup] : ${body.entry[0].messaging[0].message.text}`);
 
-    const message = body.entry[0].messaging[0].message.text;
-    const sender = body.entry[0].messaging[0].sender.id;
+    // const message = body.entry[0].messaging[0].message.text;
+    // const sender = body.entry[0].messaging[0].sender.id;
 
     if (body.object === "page") {
       const events = body && body.entry && body.entry[0];
