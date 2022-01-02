@@ -105,6 +105,8 @@ const dataTest =
 async function convertMessagePageManGiveUp(manGiveUp: any): Promise<any> {
   try {
     const page = "Man giveup";
+
+    manGiveUp = manGiveUp.trim();
     //#region init wording
     const model = manGiveUp
       .substring(
