@@ -72,7 +72,7 @@ async function forVerify(events: any) {
 async function sendMessage(sender: string, text: string, page: string) {
   try {
     if (!text) {
-      state.logger.info(`[sendMessage] : text is missing`);
+      console.log("[sendMessage] : text is missing");
       return;
     }
 
@@ -89,15 +89,13 @@ async function sendMessage(sender: string, text: string, page: string) {
 
       await transactionModel.create(data);
 
-      state.logger.info(
-        `[sendMessage] : save suucess : ${JSON.stringify(data)}`
-      );
+      console.log(`[sendMessage] : save success : ${JSON.stringify(data)}`);
     }
 
     return;
   } catch (error) {
     const err = error as Error;
-    console.log(err.message);
+    console.log(`[sendMessage] : ${err.message}`);
     return;
   }
 }

@@ -28,10 +28,11 @@ router.get("/manGiveup/webhook", async (req, res) => {
 router.post("/manGiveup/webhook", async (req, res) => {
   try {
     const page = "manGiveup";
-    state.logger.info(`starting page : ${page}`);
     let { body } = req;
 
-    console.log(body.entry[0].messaging[0].message.text);
+    console.log(
+      `[request for Man giveup] : ${body.entry[0].messaging[0].message.text}`
+    );
 
     const message = body.entry[0].messaging[0].message.text;
     const sender = body.entry[0].messaging[0].sender.id;
@@ -44,11 +45,11 @@ router.post("/manGiveup/webhook", async (req, res) => {
       return res.sendStatus(200);
     }
 
-    state.logger.error("[webhook] : body object not equal page");
+    console.log(`[request for Man giveup] : body object not equal page`);
     return res.sendStatus(400);
   } catch (error) {
     const err = error as Error;
-    state.logger.error(`[webhook] : ${err.message}`);
+    console.log(`[webhook] : ${err.message}`);
     return;
   }
 });
