@@ -66,16 +66,15 @@ async function init() {
 
   const port = process.env.PORT || 443;
   const server = https.createServer(
-    // {
-    //   cert: fs.readFileSync("../../../etc/httpd/ssl/134_209_108_248.crt"),
-    //   key: fs.readFileSync("../../../etc/httpd/ssl/private.key"),
-    //   ca: fs.readFileSync("../../../etc/httpd/ssl/CARootCertificate-ca.crt"),
-    // },
+    {
+      cert: fs.readFileSync("../../../etc/httpd/ssl/134_209_108_248.crt"),
+      key: fs.readFileSync("../../../etc/httpd/ssl/private.key"),
+      ca: fs.readFileSync("../../../etc/httpd/ssl/CARootCertificate-ca.crt"),
+    },
     app
   );
 
   server.listen(port, async () => {
-    await commonController.convertMessagePageManGiveUp("");
     state.logger.info(`server running : ${port}`);
   });
 }
