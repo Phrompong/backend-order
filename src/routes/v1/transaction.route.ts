@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
     let { startDate, endDate } = req.query;
 
     const page = req.query.page?.toString() || 1;
-    const limit = req.query.limit?.toString() || 10;
+    const limit = req.query.limit?.toString() || 1000000;
 
     let obj: any = {};
     if (startDate && endDate) {
