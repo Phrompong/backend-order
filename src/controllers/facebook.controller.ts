@@ -69,7 +69,7 @@ async function forVerify(events: any) {
   }
 }
 
-async function sendMessage(sender: string, text: string) {
+async function sendMessage(sender: string, text: string, page: string) {
   try {
     if (!text) {
       state.logger.info(`[sendMessage] : text is missing`);
@@ -80,46 +80,18 @@ async function sendMessage(sender: string, text: string) {
     const check = text.search("สรุปรายการสั่งซื้อ");
 
     if (check !== -1) {
-      const data = await commonController.convertMessage(text);
+      let data = undefined;
+      switch (page) {
+        case "manGiveup":
+          data = await commonController.convertMessagePageManGiveUp(text);
+          break;
+      }
 
       await transactionModel.create(data);
 
       state.logger.info(
         `[sendMessage] : save suucess : ${JSON.stringify(data)}`
       );
-
-      //#region body for send to facebook
-      // const requestBody = {
-      //   messaging_type: "RESPONSE",
-      //   recipient: {
-      //     id: sender,
-      //   },
-      //   message: { text },
-      // };
-      //#endregion
-
-      //#region for sending to messagers
-      // requestBody.message.text = "Save success";
-
-      // const config = {
-      //   method: "post",
-      //   uri: "https://graph.facebook.com/v6.0/me/messages",
-      //   json: requestBody,
-      //   qs: {
-      //     access_token: `${process.env.PAGE_ACCESS_TOKEN}`,
-      //   },
-      // };
-
-      // return request(config, (er: any, res: any, body: any) => {
-      //   if (!body.error) {
-      //     console.log("message sent!", body);
-      //     return body;
-      //   } else {
-      //     console.log(body.error);
-      //     return new Error("Unable to send message:" + body.error);
-      //   }
-      // });
-      //#endregion
     }
 
     return;

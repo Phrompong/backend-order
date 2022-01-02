@@ -21,6 +21,7 @@ const test =
 async function convertMessage(data: any): Promise<transaction> {
   state = container.get<IState>(TYPES.State);
   try {
+    //#region init wording
     const page = data
       .substring(data.search("ชื่อเพจ:") + 9, data.search("ชื่อรุ่น:"))
       .trim();
@@ -62,6 +63,7 @@ async function convertMessage(data: any): Promise<transaction> {
       .trim();
 
     const admin = data.substring(data.search("แอดมิน:") + 7);
+    //#endregion
 
     const response: transaction = {
       page,
@@ -69,7 +71,7 @@ async function convertMessage(data: any): Promise<transaction> {
       property,
       color,
       num: +num,
-      cod,
+      paymentType: cod,
       total: +total,
       name,
       address,
@@ -86,6 +88,123 @@ async function convertMessage(data: any): Promise<transaction> {
   }
 }
 
+const manGiveUp =
+  "สรุปรายการสั่งซื้อ\r" +
+  "ชื่อรุ่น:S\r" +
+  "ไซต์:L\r" +
+  "สี:test\r" +
+  "จำนวน:3\r" +
+  "โอน:เก็บเงินปลายทาง\r" +
+  "จำนวนเงิน:100\r" +
+  "ชื่อ:สายยัน ขุดดอน\r" +
+  "FB:Saiyan Khouddon\r" +
+  "ที่อยู่:405/47 ม.ฟลอล่าวิลล เฟส 16  ซ.6 ซ.ฉลองกรุง 61 ถ.ฉลองกรุง แขวง ลำปลาทิว ข. ลาดกระบัง กรุงเทพ 10520\r" +
+  "เบอร์:T. 0625260757\r " +
+  "แอดมิน:nan\r";
+
+async function convertMessagePageManGiveUp(data: any): Promise<any> {
+  try {
+    const page = "Man giveup";
+    //#region init wording
+    const model = manGiveUp
+      .substring(
+        manGiveUp.search("ชื่อรุ่น:") + "ชื่อรุ่น:".length,
+        manGiveUp.search("ไซต์:")
+      )
+      .trim();
+
+    const size = manGiveUp
+      .substring(
+        manGiveUp.search("ไซต์:") + "ไซต์:".length,
+        manGiveUp.search("สี:")
+      )
+      .trim();
+
+    const color = manGiveUp
+      .substring(
+        manGiveUp.search("สี:") + "สี:".length,
+        manGiveUp.search("จำนวน:")
+      )
+      .trim();
+
+    const num = manGiveUp
+      .substring(
+        manGiveUp.search("จำนวน:") + "จำนวน:".length,
+        manGiveUp.search("โอน:")
+      )
+      .trim();
+
+    const paymentType = manGiveUp
+      .substring(
+        manGiveUp.search("โอน:") + "โอน:".length,
+        manGiveUp.search("จำนวนเงิน:")
+      )
+      .trim();
+
+    const total = manGiveUp
+      .substring(
+        manGiveUp.search("จำนวนเงิน:") + "จำนวนเงิน:".length,
+        manGiveUp.search("ชื่อ:")
+      )
+      .trim();
+
+    const name = manGiveUp
+      .substring(
+        manGiveUp.search("ชื่อ:") + "ชื่อ:".length,
+        manGiveUp.search("FB:")
+      )
+      .trim();
+
+    const facebook = manGiveUp
+      .substring(
+        manGiveUp.search("FB:") + "FB:".length,
+        manGiveUp.search("ที่อยู่:")
+      )
+      .trim();
+
+    const address = manGiveUp
+      .substring(
+        manGiveUp.search("ที่อยู่:") + "ที่อยู่:".length,
+        manGiveUp.search("เบอร์:")
+      )
+      .trim();
+
+    const tel = manGiveUp
+      .substring(
+        manGiveUp.search("เบอร์:") + "เบอร์:".length,
+        manGiveUp.search("แอดมิน:")
+      )
+      .trim();
+
+    const admin = manGiveUp
+      .substring(manGiveUp.search("แอดมิน:") + "แอดมิน:".length)
+      .trim();
+
+    //#endregion
+
+    const response: transaction = {
+      page,
+      size,
+      color,
+      num: +num,
+      paymentType,
+      total: +total,
+      name,
+      facebook,
+      address,
+      tel,
+      admin,
+    };
+
+    return response;
+  } catch (error) {
+    const err = error as Error;
+    console.log(err.message);
+    throw error;
+  }
+}
+
 export default {
   convertMessage,
+  convertMessagePageManGiveUp,
 };

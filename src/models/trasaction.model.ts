@@ -2,40 +2,46 @@ import { getModelForClass, prop } from "@typegoose/typegoose";
 
 export class transaction {
   @prop()
-  public page!: string;
+  public page?: string;
 
   @prop()
-  public name!: string;
+  public model?: string;
 
   @prop()
-  public address!: string;
+  public size?: string;
 
   @prop()
-  public tel!: string;
+  public color?: string;
 
   @prop()
-  public model!: string;
+  public num?: number;
 
   @prop()
-  public property!: string;
+  public paymentType?: string;
 
   @prop()
-  public color!: string;
+  public total?: number;
 
   @prop()
-  public cod!: string;
+  public name?: string;
 
   @prop()
-  public num!: number;
+  public facebook?: string;
 
   @prop()
-  public total!: number;
+  public address?: string;
 
   @prop()
-  public admin!: string;
+  public tel?: string;
 
   @prop()
-  public createdDate!: Date;
+  public admin?: string;
+
+  @prop()
+  public property?: string;
+
+  @prop()
+  public createdDate?: Date;
 
   @prop()
   public updatedDate?: Date;

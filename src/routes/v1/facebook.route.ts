@@ -24,9 +24,11 @@ router.get("/webhook", async (req, res) => {
   }
 });
 
-router.post("/webhook", async (req, res) => {
+// * verfify success
+router.post("/manGiveup/webhook", async (req, res) => {
   try {
-    console.log("starting webhook");
+    const page = "manGiveup";
+    state.logger.info(`starting page : ${page}`);
     let { body } = req;
 
     console.log(body.entry[0].messaging[0].message.text);
@@ -37,8 +39,7 @@ router.post("/webhook", async (req, res) => {
     if (body.object === "page") {
       const events = body && body.entry && body.entry[0];
 
-      //await facebookController.forVerify(events);
-      await facebookController.sendMessage(sender, message);
+      await facebookController.sendMessage(sender, message, page);
       state.logger.info("[webhook] : success");
       return res.sendStatus(200);
     }
