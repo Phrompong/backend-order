@@ -30,9 +30,7 @@ router.post("/manGiveup/webhook", async (req, res) => {
     const page = "manGiveup";
     let { body } = req;
 
-    console.log(
-      `[request for Man giveup] : ${body.entry[0].messaging[0].message.text}`
-    );
+    console.log(`[Man giveup] : ${body.entry[0].messaging[0].message.text}`);
 
     const message = body.entry[0].messaging[0].message.text;
     const sender = body.entry[0].messaging[0].sender.id;
@@ -41,7 +39,7 @@ router.post("/manGiveup/webhook", async (req, res) => {
       const events = body && body.entry && body.entry[0];
 
       await facebookController.sendMessage(sender, message, page);
-      state.logger.info("[webhook] : success");
+      console.log("[Man giveup] : success");
       return res.sendStatus(200);
     }
 
