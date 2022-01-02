@@ -47,7 +47,8 @@ async function forVerify(sender: string, text: string) {
       uri: "https://graph.facebook.com/v6.0/me/messages",
       json: requestBody,
       qs: {
-        access_token: `EAAEhLR6SuJEBAKqiNcWZC3qaylCZBeP657qKpR4ZB9UKJInbWY6pT3H3y0DFWqadHcffpZCqGvWXhWoIvpKiZBWlpsCBYvVZAIq501JpVEoP6K08CEV8Qis88C9FSrJpr3V0NobZAOQGQXXhqHamZCe96W7qunraQMTbm4fI1U8NDDk3nNGZC45DD3rUrr43qeSgZD`,
+        access_token:
+          "EAAEhLR6SuJEBALNQD1YyV1uHQgD9ZA9U2OqusDE2fZBzYvx8yeFlu9VpV7d5x9eeyfU8Jlsb4sZB6rxQ5Q7ZCtzPk08JTplnhBRVZAtrbbox5bZAZAUWKBRhJ3ZBVwtXaVl4MjHTAZCIaP0b73iCKzpdES1VZC9XQH1BU0DOcYHQaZB1ZABZCeLzvF2CCrHZCN2z2p8aIZD",
       },
     };
 
